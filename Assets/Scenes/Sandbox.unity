@@ -194,7 +194,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 359756420}
   m_Enabled: 1
-  m_ExtensionPropertyValues: []
 --- !u!124 &359756422
 Behaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +232,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 1413989793}
   - component: {fileID: 1413989792}
   - component: {fileID: 1413989791}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,13 +583,13 @@ MonoBehaviour:
   _skinWidth: 0.02
   platformMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   triggerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   oneWayPlatformMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   slopeLimit: 30
   jumpingThreshold: 0.07
   slopeSpeedMultiplier:
@@ -706,7 +706,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1657365346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f6fd9e6a5e1264eb4961a6e0c869f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 
 --- !u!95 &1657365347
 Animator:
   serializedVersion: 3
@@ -727,7 +728,7 @@ Animator:
   m_GameObject: {fileID: 1657365340}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39d2b92e37308af41ac7c9ff16da0fd4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -746,7 +747,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df05d6ab335a47642acf89ef53da7121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  states:
+  - {fileID: 11400000, guid: 642381b61edfa3341bcc865816f5c3d4, type: 2}
+  - {fileID: 11400000, guid: 144bca1e9017720429ebc4ebe323d276, type: 2}
+  - {fileID: 11400000, guid: 543c929afa3e073478acc8816a176fc3, type: 2}
+  - {fileID: 11400000, guid: 4c9d78b364da53d458f1837abaa5bb1b, type: 2}
   moveSpeed: 8
+  jumpForce: 8
+  moveVector: {x: 0, y: 0}
 --- !u!1 &1937608188
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,9 +791,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1976111457}
+  - component: {fileID: 1976111458}
   m_Layer: 0
   m_Name: Management
-  m_TagString: Untagged
+  m_TagString: Management
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -803,6 +812,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976111458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1976111456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4641a2abb29c3094b9e415e2d716d650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140314613
 GameObject:
   m_ObjectHideFlags: 0

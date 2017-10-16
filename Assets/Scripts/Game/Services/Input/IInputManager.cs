@@ -69,7 +69,7 @@ namespace DylanJay.Services
         }
     }
 
-    public interface IInputManager : IService
+    public interface IInputManager : IDependency
     {
         Axis2DInput move { get; }
         ButtonInput jump { get; }

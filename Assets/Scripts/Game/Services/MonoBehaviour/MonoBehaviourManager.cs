@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using DylanJay.Framework;
 
 namespace DylanJay.Services
 {
-    public class MonoBehaviourManager : IMonoBehaviourManager
+    public class MonoBehaviourManager : MonoBehaviour, IMonoBehaviourManager
     {
         private event UpdateDelegate updateEvent;
         private event UpdateDelegate fixedUpdateEvent;
@@ -28,9 +29,7 @@ namespace DylanJay.Services
 
         private void Update()
         {
-            // Set cached time variables for all monobehaviours to use
-            _deltaTime = Time.deltaTime;
-            _time = Time.time;
+            CacheVariables();
 
             if (updateEvent != null)
             {
@@ -40,6 +39,8 @@ namespace DylanJay.Services
 
         private void FixedUpdate()
         {
+            CacheVariables();
+
             if (fixedUpdateEvent != null)
             {
                 fixedUpdateEvent.Invoke();
@@ -48,10 +49,18 @@ namespace DylanJay.Services
 
         private void LateUpdate()
         {
+            CacheVariables();
+
             if (lateUpdateEvent != null)
             {
                 lateUpdateEvent.Invoke();
             }
+        }
+
+        private void CacheVariables()
+        {
+            _deltaTime = Time.deltaTime;
+            _time = Time.time;
         }
 
         public void AddUpdate(UpdateDelegate myUpdate, UpdateType type)

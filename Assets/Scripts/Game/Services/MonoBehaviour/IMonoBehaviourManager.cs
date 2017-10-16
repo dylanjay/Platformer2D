@@ -6,7 +6,7 @@ namespace DylanJay.Services
 
     public enum UpdateType { Update, FixedUpdate, LateUpdate }
 
-    public interface IMonoBehaviourManager : IService
+    public interface IMonoBehaviourManager : IDependency
 	{
 		float deltaTime { get; }
         float time { get; }

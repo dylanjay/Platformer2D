@@ -5,9 +5,10 @@ namespace DylanJay.Framework
 {
     public class MonoBehaviourWrapper : MonoBehaviour
     {
-        private IMonoBehaviourManager monoBehaviourManager;
-        protected ServiceLocator serviceLocator = new ServiceLocator();
+        protected DependencyLocator dependencyLocator;
 
+        private IMonoBehaviourManager monoBehaviourManager;
+        
         private bool callUpdate = false;
         private bool callFixedUpdate = false;
         private bool callLateUpdate = false;
@@ -26,6 +27,12 @@ namespace DylanJay.Framework
         public void StartCoroutine(Task task, object value)
         {
             StartCoroutine(task.Method.Name, value);
+        }
+
+        private void Awake()
+        {
+            dependencyLocator = DependencyLocator.instance;
+            monoBehaviourManager = dependencyLocator.monoBehaviourManager;
         }
 
         protected void SetUpdateFlags(UpdateDelegate myUpdate, UpdateType updateType, bool active)

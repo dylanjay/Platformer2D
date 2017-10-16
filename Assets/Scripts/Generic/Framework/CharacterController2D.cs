@@ -148,7 +148,8 @@ namespace DylanJay.Framework
         [HideInInspector]
         [NonSerialized]
         public Vector3 velocity;
-        public bool isGrounded { get { return collisionState.below; } }
+        public bool isGrounded { get { return _isGrounded; } }
+        private bool _isGrounded;
 
         const float kSkinWidthFloatFudgeFactor = 0.001f;
 
@@ -242,7 +243,7 @@ namespace DylanJay.Framework
         /// stop when run into.
         /// </summary>
         /// <param name="deltaMovement">Delta movement.</param>
-        public void move(Vector3 deltaMovement)
+        public void Move(Vector3 deltaMovement)
         {
             // save off our current grounded state which we will use for wasGroundedLastFrame and becameGroundedThisFrame
             collisionState.wasGroundedLastFrame = collisionState.below;
@@ -266,7 +267,7 @@ namespace DylanJay.Framework
 
             // next, check movement in the vertical dir
             if (deltaMovement.y != 0f)
-                moveVertically(ref deltaMovement);
+                    moveVertically(ref deltaMovement);
 
             // move then update our state
             deltaMovement.z = 0;
@@ -278,7 +279,14 @@ namespace DylanJay.Framework
 
             // set our becameGrounded state based on the previous and current collision state
             if (!collisionState.wasGroundedLastFrame && collisionState.below)
+            {
                 collisionState.becameGroundedThisFrame = true;
+                _isGrounded = true;
+            }
+            else if (!collisionState.below && _isGrounded && deltaMovement.y != 0)
+            {
+                _isGrounded = false;
+            }
 
             // if we are going up a slope we artificially set a y velocity so we need to zero it out here
             if (_isGoingUpSlope)
@@ -302,7 +310,7 @@ namespace DylanJay.Framework
         {
             do
             {
-                move(new Vector3(0, -1f, 0));
+                Move(new Vector3(0, -1f, 0));
             } while (!isGrounded);
         }
 
@@ -490,12 +498,13 @@ namespace DylanJay.Framework
 
                 DrawRay(ray, rayDirection * rayDistance, Color.red);
                 _raycastHit = Physics2D.Raycast(ray, rayDirection, rayDistance, mask);
+
                 if (_raycastHit)
                 {
                     // set our new deltaMovement and recalculate the rayDistance taking it into account
                     deltaMovement.y = _raycastHit.point.y - ray.y;
                     rayDistance = Mathf.Abs(deltaMovement.y);
-
+                    
                     // remember to remove the skinWidth from our deltaMovement
                     if (isGoingUp)
                     {
