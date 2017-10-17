@@ -98,6 +98,8 @@ namespace DylanJay.Player
                 typeToState.Add(model.states[i].GetType(), ScriptableObject.CreateInstance(model.states[i].GetType()) as IState);
                 stateToType.Add(typeToState[model.states[i].GetType()], model.states[i].GetType());
             }
+
+            stateMachine.ChangeState(typeToState[typeof(Falling)]);
         }
 
         protected override void MyUpdate()
@@ -117,7 +119,7 @@ namespace DylanJay.Player
                     stateMachine.ChangeState(typeToState[typeof(Running)]);
                 }
             }
-            else if (!characterController.isGrounded && rigidbody.velocity.y < 0f)
+            else if (!characterController.isGrounded && model.moveVector.y < 0f)
             {
                 stateMachine.ChangeState(typeToState[typeof(Falling)]);
             }

@@ -753,7 +753,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 543c929afa3e073478acc8816a176fc3, type: 2}
   - {fileID: 11400000, guid: 4c9d78b364da53d458f1837abaa5bb1b, type: 2}
   moveSpeed: 8
-  jumpForce: 8
+  initialJumpVelocity: 5
   moveVector: {x: 0, y: 0}
 --- !u!1 &1937608188
 GameObject:

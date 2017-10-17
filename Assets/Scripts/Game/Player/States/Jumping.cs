@@ -8,10 +8,12 @@ namespace DylanJay.Player
     {
         private float deltaTime;
         private Vector2 gravity;
+        private float velocity;
 
         public void Enter()
         {
-            player.model.moveVector.y = player.model.initialJumpVelocity;
+            velocity = player.model.initialJumpVelocity;
+            //player.model.moveVector.y = player.model.initialJumpVelocity;
             //player.rigidbody.velocity = new Vector2(player.rigidbody.velocity.x, player.model.initialJumpVelocity);
             gravity = Physics2D.gravity;
         }
@@ -25,11 +27,13 @@ namespace DylanJay.Player
         {
             deltaTime = monoBehaviourManager.deltaTime;
 
-            player.model.moveVector += gravity;
+            player.model.moveVector.x = input.move.x.value * player.model.moveSpeed * deltaTime;
 
-            player.model.moveVector.x = input.move.x.value * player.model.moveSpeed;
+            player.model.moveVector.y = velocity * deltaTime + 0.5f * gravity.y * deltaTime * deltaTime;
 
-            player.characterController.Move(player.model.moveVector * deltaTime);
+            velocity += gravity.y * deltaTime;
+
+            player.characterController.Move(player.model.moveVector);
         }
     }
 }
